@@ -1,8 +1,29 @@
-# Cloudflare deployment
+# Deployment
 
 The current application is a browser-only React/TypeScript/Vite SPA. It does not require a Worker API or database to demonstrate its local workflows.
 
-## Build and inspect
+## GitHub Pages · free github.io address
+
+The project site address is `https://vpermillion.github.io/Chat_Hariu/` after GitHub Pages is enabled. Its dashboard link is `https://vpermillion.github.io/Chat_Hariu/#/app`. This is a public demo with browser-local records; real integrations remain unconnected.
+
+The Pages build uses the `/Chat_Hariu/` asset base and hash routing, so dashboard links and refreshes work on static hosting. The normal development and Cloudflare builds retain their existing `/app` browser routes.
+
+```sh
+npm ci
+npm run build:pages
+npm run test:pages
+npm run publish:pages
+```
+
+`publish:pages` uploads only the built `dist/` files and `.nojekyll` to a separate `gh-pages` branch using existing Git authentication. It does not change the source checkout, staging area or repository visibility. Existing deployment history is preserved with a normal fast-forward push. No GitHub token is stored in the repository.
+
+One-time repository setup: open **Settings → Pages**, choose **Deploy from a branch**, select **gh-pages** and **/ (root)**, then **Save**. GitHub will build and publish that branch. Pushes alone do not prove Pages is enabled or that a deployment has succeeded; verify the site after GitHub finishes the Pages build.
+
+Future changes are published by repeating the build/test/publish commands from the source branch. CI validates both hosting modes but does not publish automatically. Browser checks run the actual production Pages build under its repository subpath, covering assets, marketing links, demo navigation, refresh/persistence, direct mobile routes and flow controls.
+
+## Cloudflare
+
+### Build and inspect
 
 ```sh
 npm ci

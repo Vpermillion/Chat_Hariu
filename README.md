@@ -69,6 +69,8 @@ Use **Account → Reset demo** to replace changes in **both** demo businesses wi
 
 ## Deployment and next phase
 
-See [Cloudflare deployment](docs/deployment.md) for a static deployment and the server integration checklist. `.env.example` contains only public placeholder names. Keep credentials on a future server; never put Meta tokens, app secrets or AI keys in `VITE_*`, browser bundles or localStorage.
+GitHub Pages is supported at `https://vpermillion.github.io/Chat_Hariu/` once enabled in repository settings. Use `npm run build:pages`, `npm run test:pages` and `npm run publish:pages` to validate and publish static files to `gh-pages`. The Pages build uses hash routes so deep links and refreshes work.
+
+See [deployment instructions](docs/deployment.md) for GitHub Pages activation, Cloudflare hosting and the server integration checklist. `.env.example` contains only public placeholder names. Keep credentials on a future server; never put Meta tokens, app secrets or AI keys in `VITE_*`, browser bundles or localStorage.
 
 Real Meta connections/delivery/OAuth, webhook validation, App Review, authentication, authorization, D1 persistence, AI generation, PDF extraction, queues, bulk-send policy checks, payment processing and payment verification **are not implemented**. The application never represents demo connections, simulated AI replies, local messages or payment transitions as real integrations. No deployment or external approval is implied.

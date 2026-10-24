@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import {
   ArrowRight,
@@ -114,12 +114,12 @@ export function MarketingLayout() {
       <header className="marketing-nav">
         <Brand />
         <nav className={nav ? 'public-nav open' : 'public-nav'} aria-label={t('Features')}>
-          <a href="/#features" onClick={() => setNav(false)}>
+          <Link to="/?section=features" onClick={() => setNav(false)}>
             {t('Features')}
-          </a>
-          <a href="/#how-it-works" onClick={() => setNav(false)}>
+          </Link>
+          <Link to="/?section=how-it-works" onClick={() => setNav(false)}>
             {t('How it works')}
-          </a>
+          </Link>
           <Link to="/pricing" onClick={() => setNav(false)}>
             {t('Pricing')}
           </Link>
@@ -183,6 +183,11 @@ export function MarketingLayout() {
   );
 }
 function Landing() {
+  const { search } = useLocation();
+  useEffect(() => {
+    const section = new URLSearchParams(search).get('section');
+    if (section) document.getElementById(section)?.scrollIntoView({ block: 'start' });
+  }, [search]);
   const { t, data } = useStore();
   const w = data.workspaces.nuudel;
   const [industry, setIndustry] = useState(0);
@@ -266,9 +271,9 @@ function Landing() {
               {t('Try the demo')}
               <ArrowRight size={18} />
             </Link>
-            <a className="button button-secondary button-lg" href="#how-it-works">
+            <Link className="button button-secondary button-lg" to="/?section=how-it-works">
               {t('How it works')}
-            </a>
+            </Link>
           </div>
           <small className="hero-note">
             <ShieldCheck size={14} />

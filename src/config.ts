@@ -3,7 +3,7 @@ export const brand = {
   name: 'Туслах',
   latinName: 'Tuslah',
   tagline: 'Бизнесийн тань шинэ туслах',
-  logo: '/logo.svg',
+  logo: `${import.meta.env.BASE_URL}logo.svg`,
   contactEmail: '',
   contactPhone: '',
   theme: { primary: '#315cfd', success: '#158775', warning: '#b77914', danger: '#ce4357' },

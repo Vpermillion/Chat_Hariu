@@ -138,7 +138,16 @@ export function DashboardLayout() {
   const unread = w.conversations.reduce((sum, c) => sum + c.unread, 0);
   return (
     <div className="dashboard-layout">
-      <a className="skip-link" href="#main-content">
+      <a
+        className="skip-link"
+        href="#main-content"
+        onClick={(event) => {
+          event.preventDefault();
+          const main = document.getElementById('main-content');
+          main?.focus();
+          main?.scrollIntoView({ block: 'start' });
+        }}
+      >
         {t('Dashboard')}
       </a>
       {drawer && (
@@ -353,6 +362,7 @@ export function DashboardLayout() {
         )}
         <main
           id="main-content"
+          tabIndex={-1}
           key={data.activeBusinessId}
           className={`dashboard-main ${location.pathname.endsWith('/inbox') || location.pathname.endsWith('/live-agent') ? 'inbox-main' : ''}`}
         >

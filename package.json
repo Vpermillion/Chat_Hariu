@@ -17,7 +17,11 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "deploy:check": "wrangler deploy --dry-run",
-    "deploy": "wrangler deploy"
+    "deploy": "wrangler deploy",
+    "build:pages": "tsc -b && vite build --mode github-pages --base=/Chat_Hariu/",
+    "preview:pages": "vite preview --host 127.0.0.1 --port 4174 --strictPort --base=/Chat_Hariu/",
+    "test:pages": "playwright test --config playwright.pages.config.ts",
+    "publish:pages": "bash scripts/publish-pages.sh"
   },
   "dependencies": {
     "lucide-react": "^0.468.0",

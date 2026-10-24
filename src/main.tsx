@@ -1,12 +1,15 @@
 import { StrictMode, Component, useEffect, lazy, Suspense } from 'react';
 import type { ReactNode, ErrorInfo } from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
+import { BrowserRouter, HashRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
 import { StoreProvider, useStore } from './store';
 import { DashboardLayout } from './layout';
 
 import { brand } from './config';
 import './styles.css';
+
+// GitHub Pages does not provide an SPA rewrite. Hash routes survive direct links and refreshes.
+const AppRouter = import.meta.env.MODE === 'github-pages' ? HashRouter : BrowserRouter;
 
 const MarketingLayout = lazy(() =>
   import('./pages/Marketing').then((module) => ({ default: module.MarketingLayout })),
@@ -90,10 +93,10 @@ class AppErrorBoundary extends Component<{ children: ReactNode }, { failed: bool
   }
 }
 function ScrollManager() {
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
+    if (!new URLSearchParams(search).has('section')) window.scrollTo(0, 0);
+  }, [pathname, search]);
   return null;
 }
 function NotFound() {
@@ -112,7 +115,7 @@ function App() {
   return (
     <AppErrorBoundary>
       <StoreProvider>
-        <BrowserRouter>
+        <AppRouter>
           <ScrollManager />
           <Suspense
             fallback={
@@ -151,7 +154,7 @@ function App() {
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
-        </BrowserRouter>
+        </AppRouter>
       </StoreProvider>
     </AppErrorBoundary>
   );
